@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CalculadoraDescontoFrete.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">calculadora-descontos</a> &gt; <a href="index.source.html" class="el_package">com.ecommerce.calculadora</a> &gt; <span class="el_source">CalculadoraDescontoFrete.java</span></div><h1>CalculadoraDescontoFrete.java</h1><pre class="source lang-java linenums">package com.ecommerce.calculadora;
+
+<span class="fc" id="L3">public class CalculadoraDescontoFrete {</span>
+
+    private static final double FRETE_NORTE_NORDESTE = 20.0;
+    private static final double FRETE_DEMAIS_REGIOES = 30.0;
+    private static final double LIMITE_FRETE_GRATIS = 300.0;
+    private static final double PERCENTUAL_DESCONTO_PRIMEIRA_COMPRA = 0.10;
+
+    public double calcularValorFinal(double valorCompra, boolean ehVip, boolean ehPrimeiraCompra, String regiao) {
+<span class="fc bfc" id="L11" title="All 2 branches covered.">        if(valorCompra &lt;= 0) {</span>
+<span class="fc" id="L12">            throw new IllegalArgumentException(&quot;O valor da compra deve ser maior que zero.&quot;);</span>
+        }
+
+<span class="fc" id="L15">        double valorFrete = calcularFrete(valorCompra, ehVip, regiao);</span>
+<span class="fc" id="L16">        double valorComDesconto = aplicarDescontoPrimeiraCompra(valorCompra, ehPrimeiraCompra);</span>
+
+<span class="fc" id="L18">        return valorComDesconto + valorFrete;</span>
+    }
+
+    private double calcularFrete(double valorCompra, boolean ehVip, String regiao) {
+<span class="fc bfc" id="L22" title="All 4 branches covered.">        boolean freteGratis = ehVip || valorCompra &gt;= LIMITE_FRETE_GRATIS;</span>
+<span class="fc bfc" id="L23" title="All 2 branches covered.">        if (freteGratis) {</span>
+<span class="fc" id="L24">            return 0.0;</span>
+        }
+<span class="fc" id="L26">        return obterFreteBasePorRegiao(regiao);</span>
+    }
+
+    private double obterFreteBasePorRegiao(String regiao) {
+<span class="pc bpc" id="L30" title="1 of 2 branches missed.">        if (regiao == null) {</span>
+<span class="nc" id="L31">            throw new IllegalArgumentException(&quot;A regiao não pode ser nula.&quot;);</span>
+        }
+<span class="fc" id="L33">        String regiaoNormalizada = regiao.trim();</span>
+<span class="pc bpc" id="L34" title="1 of 4 branches missed.">        if (regiaoNormalizada.compareToIgnoreCase(&quot;norte&quot;) == 0 || regiaoNormalizada.compareToIgnoreCase(&quot;nordeste&quot;) == 0) {</span>
+<span class="fc" id="L35">            return FRETE_NORTE_NORDESTE;</span>
+        }
+<span class="fc" id="L37">        return FRETE_DEMAIS_REGIOES;</span>
+    }
+
+    private double aplicarDescontoPrimeiraCompra(double valorCompra, boolean ehPrimeiraCompra) {
+<span class="pc bpc" id="L41" title="1 of 2 branches missed.">        if (ehPrimeiraCompra) {</span>
+<span class="nc" id="L42">            return valorCompra * (1 - PERCENTUAL_DESCONTO_PRIMEIRA_COMPRA);</span>
+        }
+<span class="fc" id="L44">        return valorCompra;</span>
+    }
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
