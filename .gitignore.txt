@@ -1,0 +1,9 @@
+# Pasta gerada pelo Maven (build, relatórios, classes compiladas)
+target/
+
+# Arquivos de configuração do VS Code (opcional, específico da sua máquina)
+.vscode/
+
+# Arquivos de sistema do Windows/Mac
+.DS_Store
+Thumbs.db
