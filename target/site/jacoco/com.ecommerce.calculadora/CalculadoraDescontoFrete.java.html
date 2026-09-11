@@ -27,19 +27,19 @@
     }
 
     private double obterFreteBasePorRegiao(String regiao) {
-<span class="pc bpc" id="L30" title="1 of 2 branches missed.">        if (regiao == null) {</span>
-<span class="nc" id="L31">            throw new IllegalArgumentException(&quot;A regiao não pode ser nula.&quot;);</span>
+<span class="fc bfc" id="L30" title="All 2 branches covered.">        if (regiao == null) {</span>
+<span class="fc" id="L31">            throw new IllegalArgumentException(&quot;A regiao não pode ser nula.&quot;);</span>
         }
 <span class="fc" id="L33">        String regiaoNormalizada = regiao.trim();</span>
-<span class="pc bpc" id="L34" title="1 of 4 branches missed.">        if (regiaoNormalizada.compareToIgnoreCase(&quot;norte&quot;) == 0 || regiaoNormalizada.compareToIgnoreCase(&quot;nordeste&quot;) == 0) {</span>
+<span class="fc bfc" id="L34" title="All 4 branches covered.">        if (regiaoNormalizada.compareToIgnoreCase(&quot;norte&quot;) == 0 || regiaoNormalizada.compareToIgnoreCase(&quot;nordeste&quot;) == 0) {</span>
 <span class="fc" id="L35">            return FRETE_NORTE_NORDESTE;</span>
         }
 <span class="fc" id="L37">        return FRETE_DEMAIS_REGIOES;</span>
     }
 
     private double aplicarDescontoPrimeiraCompra(double valorCompra, boolean ehPrimeiraCompra) {
-<span class="pc bpc" id="L41" title="1 of 2 branches missed.">        if (ehPrimeiraCompra) {</span>
-<span class="nc" id="L42">            return valorCompra * (1 - PERCENTUAL_DESCONTO_PRIMEIRA_COMPRA);</span>
+<span class="fc bfc" id="L41" title="All 2 branches covered.">        if (ehPrimeiraCompra) {</span>
+<span class="fc" id="L42">            return valorCompra * (1 - PERCENTUAL_DESCONTO_PRIMEIRA_COMPRA);</span>
         }
 <span class="fc" id="L44">        return valorCompra;</span>
     }
