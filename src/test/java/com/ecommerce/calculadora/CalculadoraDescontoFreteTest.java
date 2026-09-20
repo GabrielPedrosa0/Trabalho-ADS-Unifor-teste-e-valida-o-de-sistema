@@ -119,25 +119,51 @@ public class CalculadoraDescontoFreteTest {
     }
 
     /**
-     * CT_014 - Teste negativo dirigido. DEFEITO CONHECIDO, documentado no Topico 11.
+     * CT_014 - Teste negativo dirigido (CE8). Defeito corrigido, documentado no Topico 11.
      *
-     * A validacao de regiao nula vive em obterFreteBasePorRegiao, metodo que so e
-     * invocado quando o frete NAO e isento. Com ehVip = true o parametro regiao
-     * sequer e lido, e um null atravessa o metodo sem erro.
-     *
-     * Este teste documenta o comportamento atual; ele nao falha por causa dele.
-     * Se a equipe decidir mover a validacao para calcularValorFinal, troque o
-     * corpo por um assertThrows(IllegalArgumentException.class, ...).
+     * A validacao de regiao nula ficava em obterFreteBasePorRegiao, metodo que so
+     * era invocado quando o frete NAO era isento. Com ehVip = true (ou valor >= 300)
+     * um null atravessava sem erro. A validacao foi movida para calcularValorFinal,
+     * entao a regiao nula e rejeitada independentemente da isencao de frete.
      */
     @Test
-    @DisplayName("Regiao nula NAO e validada quando o frete e isento (defeito conhecido)")
-    void regiaoNulaNaoEhValidadaQuandoFreteEhGratis() {
-        double valorFinal = calc.calcularValorFinal(400.0, true, true, null);
-        assertEquals(360.0, valorFinal, 0.001);
+    @DisplayName("Deve lancar excecao para regiao nula mesmo quando o frete e isento")
+    void deveLancarExcecaoQuandoRegiaoNulaComFreteGratis() {
+        assertThrows(IllegalArgumentException.class,
+                () -> calc.calcularValorFinal(400.0, true, true, null));
+    }
+
+    /**
+     * CT_016 - Teste de robustez (CE8). Regiao em branco e rejeitada.
+     *
+     * Antes da correcao, " " nao era null e, apos trim(), caia no frete padrao (130,00).
+     * A validacao agora usa isBlank() junto com a checagem de null. Documentado no Topico 11.
+     */
+    @Test
+    @DisplayName("Deve lancar excecao quando a regiao estiver em branco")
+    void deveLancarExcecaoQuandoRegiaoEmBranco() {
+        assertThrows(IllegalArgumentException.class,
+                () -> calc.calcularValorFinal(100.0, false, false, " "));
+    }
+
+    /** CT_017 - Teste negativo dirigido (CE8 + CE4). Cenario 5 do App.java: regiao em branco com frete isento. */
+    @Test
+    @DisplayName("Deve lancar excecao para regiao em branco mesmo quando o frete e isento")
+    void deveLancarExcecaoQuandoRegiaoEmBrancoComFreteGratis() {
+        assertThrows(IllegalArgumentException.class,
+                () -> calc.calcularValorFinal(400.0, true, true, " "));
+    }
+
+    /** CT_018 - Teste de robustez (CE8). Regiao vazia ("") tambem e rejeitada por isBlank(). */
+    @Test
+    @DisplayName("Deve lancar excecao quando a regiao for vazia")
+    void deveLancarExcecaoQuandoRegiaoVazia() {
+        assertThrows(IllegalArgumentException.class,
+                () -> calc.calcularValorFinal(100.0, false, false, ""));
     }
 
     // Desconto de primeira compra
-    /** CT_010 - Particionamento de equivalencia (CE6). Ramos 12 -> 13, 13 -> 15. */
+    /** CT_010- Particionamento de equivalencia (CE6). Ramos 12 -> 13, 13 -> 15. */
     @Test
     @DisplayName("Tem desconto na primeira compra")
     void primeiraCompraTemDesconto() {

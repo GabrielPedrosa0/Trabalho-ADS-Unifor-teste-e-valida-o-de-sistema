@@ -11,6 +11,9 @@ public class CalculadoraDescontoFrete {
         if(valorCompra <= 0) {
             throw new IllegalArgumentException("O valor da compra deve ser maior que zero.");
         }
+        if (regiao == null || regiao.isBlank()) {
+            throw new IllegalArgumentException("A regiao não pode ser nula ou em branco.");
+        }
 
         double valorFrete = calcularFrete(valorCompra, ehVip, regiao);
         double valorComDesconto = aplicarDescontoPrimeiraCompra(valorCompra, ehPrimeiraCompra);
@@ -27,9 +30,6 @@ public class CalculadoraDescontoFrete {
     }
 
     private double obterFreteBasePorRegiao(String regiao) {
-        if (regiao == null) {
-            throw new IllegalArgumentException("A regiao não pode ser nula.");
-        }
         String regiaoNormalizada = regiao.trim();
         if (regiaoNormalizada.compareToIgnoreCase("norte") == 0 || regiaoNormalizada.compareToIgnoreCase("nordeste") == 0) {
             return FRETE_NORTE_NORDESTE;

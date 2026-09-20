@@ -36,12 +36,16 @@ public class App {
         double resultado4 = calculadora.calcularValorFinal(valorCompra4, ehVip4, ehPrimeiraCompra4, regiao4);
         System.out.println("Cliente VIP (frete grátis mesmo com valor baixo): R$" + resultado4);
 
-        // cenario de teste
-        double valorCompra5 = 100;
-        boolean ehVip5 = false;
-        boolean ehPrimeiraCompra5 = false;
-        String regiao5 = "Nordeste";
-        double resultado5 = calculadora.calcularValorFinal(valorCompra5, ehVip5, ehPrimeiraCompra5, regiao5);
-        System.out.println(resultado5);
+        // Cenário 5: região em branco é rejeitada, mesmo com frete grátis (VIP)
+        double valorCompra5 = 400;
+        boolean ehVip5 = true;
+        boolean ehPrimeiraCompra5 = true;
+        String regiao5 = " ";
+        try {
+            double resultado5 = calculadora.calcularValorFinal(valorCompra5, ehVip5, ehPrimeiraCompra5, regiao5);
+            System.out.println("Região em branco: R$" + resultado5);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Região em branco rejeitada: " + e.getMessage());
+        }
     }
 }
