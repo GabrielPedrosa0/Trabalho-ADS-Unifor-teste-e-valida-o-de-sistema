@@ -8,6 +8,7 @@
   <artifactId>calculadora-descontos</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>jar</packaging>
+  <name>Calculadora de Descontos e Frete</name>
 
   <properties>
     <maven.compiler.source>21</maven.compiler.source>
@@ -16,7 +17,7 @@
   </properties>
 
   <dependencies>
-    <!-- JUnit 5, para os testes unitários do Jefferson -->
+    <!-- JUnit 5, para os testes unitarios -->
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter</artifactId>
@@ -27,30 +28,79 @@
 
   <build>
     <plugins>
-      <!-- Necessário para o Maven rodar testes com JUnit 5 -->
+      <!-- Necessario para o Maven rodar testes com JUnit 5 -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
         <version>3.2.5</version>
       </plugin>
 
-      <!-- JaCoCo, para o relatório de cobertura do Membro 4 -->
+      <!-- JaCoCo, para o relatorio de cobertura -->
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
         <version>0.8.12</version>
+
+        <!--
+          ESCOPO DA MEDICAO DE COBERTURA
+          A classe App e o ponto de entrada de demonstracao da aplicacao: imprime
+          cenarios no console e nao contem regra de negocio. Ela esta, portanto,
+          fora do escopo dos testes unitarios e fora do escopo da medicao de
+          cobertura. Esta exclusao esta declarada no Topico 5 (Planejamento) da
+          documentacao de entrega.
+        -->
+        <configuration>
+          <excludes>
+            <exclude>**/App.class</exclude>
+          </excludes>
+        </configuration>
+
         <executions>
           <execution>
             <goals>
               <goal>prepare-agent</goal>
             </goals>
           </execution>
+
           <execution>
             <id>report</id>
             <phase>test</phase>
             <goals>
               <goal>report</goal>
             </goals>
+          </execution>
+
+          <!--
+            Trava de qualidade: quebra o build se a cobertura cair abaixo de 80%,
+            que e a meta obrigatoria da Trilha B. Serve como evidencia objetiva de
+            que o criterio de parada definido no Topico 5 foi verificado por
+            ferramenta, e nao apenas conferido a olho no relatorio HTML.
+          -->
+          <execution>
+            <id>verificar-meta-de-cobertura</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>check</goal>
+            </goals>
+            <configuration>
+              <rules>
+                <rule>
+                  <element>BUNDLE</element>
+                  <limits>
+                    <limit>
+                      <counter>INSTRUCTION</counter>
+                      <value>COVEREDRATIO</value>
+                      <minimum>0.80</minimum>
+                    </limit>
+                    <limit>
+                      <counter>BRANCH</counter>
+                      <value>COVEREDRATIO</value>
+                      <minimum>0.80</minimum>
+                    </limit>
+                  </limits>
+                </rule>
+              </rules>
+            </configuration>
           </execution>
         </executions>
       </plugin>

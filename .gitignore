@@ -1,0 +1,13 @@
+# Pasta gerada pelo Maven (build, relatorios, classes compiladas)
+target/
+
+# Arquivos de configuracao de IDE (especificos de cada maquina)
+.vscode/
+.idea/
+*.iml
+
+# Arquivos de sistema
+.DS_Store
+Thumbs.db
+
+.github
