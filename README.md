@@ -27,7 +27,7 @@ O método `calcularValorFinal(valorCompra, ehVip, ehPrimeiraCompra, regiao)` ret
 
 ## Técnicas de Teste Aplicadas
 
-- **Particionamento em Classes de Equivalência** (CE1 a CE11)
+- **Particionamento em Classes de Equivalência** (CE1 a CE10)
 - **Análise do Valor Limite** (0, 0,01, 299,99, 300, 300,01)
 - **Caixa-Branca:** cobertura dos ramos do grafo de fluxo, incluindo o curto-circuito do `||`
 - **Testes negativos e de robustez:** região nula, vazia, em branco e com espaços
@@ -43,8 +43,8 @@ A suíte possui **18 casos de teste** (CT_001 a CT_018), cada um documentado com
 
 | Métrica | Resultado |
 | :--- | :--- |
-| Instruções | 75/75 (100%) |
-| Ramos | 16/16 (100%) |
+| Instruções | 78/78 (100%) |
+| Ramos | 18/18 (100%) |
 | Linhas | 19/19 (100%) |
 | Métodos | 5/5 (100%) |
 
@@ -83,8 +83,8 @@ A suíte possui **18 casos de teste** (CT_001 a CT_018), cada um documentado com
 
 1. **Clone o repositório:**
    ```bash
-   git clone https://github.com/SEU-USUARIO/Trabalho-ADS-Unifor-teste-e-validacao-de-sistema.git
-   cd Trabalho-ADS-Unifor-teste-e-validacao-de-sistema
+   git clone https://github.com/GabrielPedrosa0/Trabalho-ADS-Unifor-teste-e-valida-o-de-sistema.git
+   cd Trabalho-ADS-Unifor-teste-e-valida-o-de-sistema
    ```
 
 2. **Execute os testes e gere o relatório de cobertura:**

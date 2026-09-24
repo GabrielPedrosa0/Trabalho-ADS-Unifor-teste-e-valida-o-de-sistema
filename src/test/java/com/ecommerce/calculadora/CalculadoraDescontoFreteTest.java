@@ -102,7 +102,7 @@ public class CalculadoraDescontoFreteTest {
         assertEquals(120.0, valorFinal, 0.001);
     }
 
-    /** CT_015 - Particionamento de equivalencia (CE11). Ramo 9 -> 11. */
+    /** CT_015 - Particionamento de equivalencia (CE10). Ramo 9 -> 11. */
     @Test
     @DisplayName("Regiao desconhecida aplica o frete padrao de R$30")
     void regiaoDesconhecidaAplicaFretePadrao() {
@@ -114,8 +114,9 @@ public class CalculadoraDescontoFreteTest {
     @Test
     @DisplayName("Deve lancar excecao quando a regiao for nula")
     void lancarExcecaoQuandoRegiaoNula() {
-        assertThrows(IllegalArgumentException.class,
+        IllegalArgumentException excecao = assertThrows(IllegalArgumentException.class,
                 () -> calc.calcularValorFinal(100.0, false, false, null));
+        assertEquals("A regiao não pode ser nula ou em branco.", excecao.getMessage());
     }
 
     /**
@@ -129,8 +130,9 @@ public class CalculadoraDescontoFreteTest {
     @Test
     @DisplayName("Deve lancar excecao para regiao nula mesmo quando o frete e isento")
     void deveLancarExcecaoQuandoRegiaoNulaComFreteGratis() {
-        assertThrows(IllegalArgumentException.class,
+        IllegalArgumentException excecao = assertThrows(IllegalArgumentException.class,
                 () -> calc.calcularValorFinal(400.0, true, true, null));
+        assertEquals("A regiao não pode ser nula ou em branco.", excecao.getMessage());
     }
 
     /**
